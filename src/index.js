@@ -67,24 +67,26 @@ function Header() {
 
 function Menu() {
   // const style = { color: 'blue', fontSize: '38px' }
+  const pizzas = pizzaData
   return (
     <main className='menu'>
       <h2>Our menu</h2>
-      <div className='pizzas'>
-        {pizzaData.map((pizza) => (
-          <Pizza
-            name={pizza.name}
-            ingredients={pizza.ingredients}
-            photoName={pizza.photoName}
-            price={pizza.price}
-          />
-        ))}
-      </div>
+      {pizzas && (
+        <ul className='pizzas'>
+          {pizzas.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      )}
+
       {/* <Pizza
         name='Pizza Spinaci'
         ingredients='Tomato, mozzarella, ham, arugula, and burrata cheese'
         photoName='pizzas/spinaci.jpg'
         price={10}
+         // ingredients={pizza.ingredients}
+            // photoName={pizza.photoName}
+            // price={pizza.price}
       />
       <Pizza
         name='Pizza Margherita'
@@ -98,15 +100,15 @@ function Menu() {
 
 function Pizza(props) {
   return (
-    <div className='pizza'>
-      <img src={props.photoName} alt={props.name} />
+    <li className='pizza'>
+      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
 
       <div>
-        <h3>{props.name}</h3>
-        <p>{props.ingredients}</p>
+        <h3>{props.pizzaObj.name}</h3>
+        <p>{props.pizzaObj.ingredients}</p>
       </div>
-      <span>{props.price * 3}</span>
-    </div>
+      <span>{props.pizzaObj.price}</span>
+    </li>
   )
 }
 
@@ -116,12 +118,18 @@ function Footer() {
   const closeHour = 22
   return (
     <footer className='footer'>
-      <h3>{new Date().toLocaleTimeString()} </h3>
+      {openHour && (
+        <div className='order'>
+          <p>We're open until {closeHour}:00. Come visit us or order online!</p>
+          <button className='btn'>Order</button>
+        </div>
+      )}
+      {/* <h3>{new Date().toLocaleTimeString()} </h3>
       <h4>
         {hour >= openHour && hour <= closeHour
           ? 'We are open'
           : 'We are closed'}
-      </h4>
+      </h4> */}
     </footer>
   )
   //   return React.createElement('footer', null, `We're currently open`)
